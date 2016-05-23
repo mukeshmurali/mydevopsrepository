@@ -1,0 +1,38 @@
+---
+- hosts: control
+  remote_user: root
+  tasks:
+    - name: test connection
+      ping:
+      remote_user: yourname
+
+    - name: Verify docker is installed correctly
+      shell: docker run hello-world
+      become: yes
+
+    - name: upload dockerfile into container
+      synchronize: src=../docker dest=/tmp
+      register: uploadoutput
+
+    - debug: var=uploadoutput
+
+    - name: print current working directory
+      shell: pwd
+      register: result
+
+    - name: print root  directory
+      shell: cd /tmp && ls -a
+      register: result1
+
+    - debug: var=result
+
+    - debug: var=result1
+
+    - name: check if docker is installed
+      shell: docker info
+      register: dockerinfo
+
+    - debug: var=dockerinfo
+
+    - name: build the image
+      shell: docker build -t localmongo /tmp

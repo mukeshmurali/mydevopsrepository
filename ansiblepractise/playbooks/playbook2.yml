@@ -1,0 +1,18 @@
+---
+- hosts: control
+  remote_user: root
+  tasks:
+    - name: test connection
+      ping:
+      remote_user: yourname
+
+    - name: Verify docker is installed correctly
+      shell: docker run hello-world
+      become: yes
+
+    - name: Print docker port
+      shell: docker port
+      register: dockerport
+
+    - debug: var=dockerport
+
