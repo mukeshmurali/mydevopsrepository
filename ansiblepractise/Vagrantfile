@@ -20,7 +20,7 @@ Vagrant.configure(2) do |config|
   d.build_image "/vagrant/docker"
   end
   config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "playbooks/playbook2.yml"
+    ansible.playbook = "playbooks/playbook.yml"
   end
 
 end
